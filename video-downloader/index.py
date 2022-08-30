@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 from pytube import YouTube
 
+sg.change_look_and_feel('DarkBrown4')
 
 def executar_download_video(link, path):
     video = YouTube(link)
@@ -12,19 +13,22 @@ def executar_download_audio(link, path):
 
 
 
-layout = [[sg.Text('Link do video:           '), sg.InputText()],
+layout = [[sg.Text('Link do video:           '), sg.InputText(), sg.Text('by: Cwtch',)],
           [sg.Text('Diretório para salvar: '),
            sg.InputText(), sg.FolderBrowse()],
-          [sg.Button('Download'), sg.Button('Áudio')],
-          [sg.Button('Fechar')]]
+          [sg.Text('Download: '), sg.Button('Video', size=(10,1)), sg.Button('Áudio', size=(10,1)), sg.Text('', size=(13,1)), sg.Button('Fechar', size=(15,1))]],
 
-popup = sg.Window('Donwload de Vídeos com Python', layout)
+# layout = [[sg.VPush()],
+#          [sg.Push(), sg.Column(layout, element_justification='l'), sg.Push()],
+#          [sg.VPush()]]
+
+popup = sg.Window('Download de Cria', layout, size=(560,100), grab_anywhere=True)
 
 while True:
     event, values = popup.read()
     if event == 'Fechar' or event == sg.WIN_CLOSED:
         break
-    elif event == 'Download':
+    elif event == 'Video':
         executar_download_video(values[0], values[1])
         sg.popup_ok('Download completo!')
     elif event == 'Áudio':
